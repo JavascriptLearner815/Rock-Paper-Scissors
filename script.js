@@ -115,7 +115,7 @@ function advance(span) {
 function loseLevel(span) {
   for (const level of LEVELS) {
     const demotion = level.onLose
-    if (span.innerText.includes(capitalizeFirstLetter(level.name)) {
+    if (span.innerText.includes(capitalizeFirstLetter(level.name))) {
       span.innerText = `${demotion.emoji} ${capitalizeFirstLetter(demotion.name)}`
     }
   }
