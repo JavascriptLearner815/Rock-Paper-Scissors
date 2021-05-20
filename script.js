@@ -8,31 +8,31 @@ const LEVELS = [
   {
     name: 'coconut',
     emoji: '🥥',
-    onLose: LEVELS[0]/*,
+    onLose: 'coconut'/*,
     num: 1*/
   },
   {
     name: 'palmtree',
     emoji: '🌴',
-    onLose: LEVELS[1]/*,
+    onLose: 'palmtree'/*,
     num: 2*/
   },
   {
     name: 'volcano',
     emoji: '🌋',
-    onLose: LEVELS[2]/*,
+    onLose: 'volcano'/*,
     num: 3*/
   },
   {
     name: 'royalty',
     emoji: '✊',
-    onLose: LEVELS[0]/*,
+    onLose: 'coconut'/*,
     num: 4*/
   },
   {
     name: 'angel',
     emoji: '👼',
-    onLose: LEVELS[3]/*,
+    onLose: 'royalty'/*,
     num: 5*/
   }
 ]
@@ -107,16 +107,22 @@ function advance(span) {
     const length = LEVELS.length
     const notPathEnd = index + 1 < length
     if (span.innerText.includes(capitalizeFirstLetter(level.name)) && notPathEnd) {
-      span.innerText = `${LEVELS[index + 1].emoji} ${capitalizeFirstLetter(LEVELS[index + 1].name)}`
+      return span.innerText = `${LEVELS[index + 1].emoji} ${capitalizeFirstLetter(LEVELS[index + 1].name)}`
     }
   }
 }
 
 function loseLevel(span) {
   for (const level of LEVELS) {
-    const demotion = level.onLose
+    const setDemotion = level.onLose
+    let demotion
+    ;(function(){
+      for (const level2 of LEVELS) {
+        if (level2.name === setDemotion) return demotion = level2
+      }
+    })()
     if (span.innerText.includes(capitalizeFirstLetter(level.name))) {
-      span.innerText = `${demotion.emoji} ${capitalizeFirstLetter(demotion.name)}`
+      return span.innerText = `${demotion.emoji} ${capitalizeFirstLetter(demotion.name)}`
     }
   }
 }
