@@ -21,6 +21,14 @@ body {
   transform: scale(1.2);
 }
 
+.selection.locked {
+  content: '🔒';
+}
+
+.selection.unlocked {
+  content: attr(data-emoji, '🤷');
+}
+
 .results {
   margin-top: 1rem;
   display: grid;
@@ -30,7 +38,8 @@ body {
   align-items: center;
 }
 
-.result-score {
+.result-score,
+.result-prestige {
   margin-left: .1rem;
   font-size: .5rem;
   color: #333;
@@ -48,3 +57,8 @@ body {
 /* .result-level {
 
 } */
+
+.buttons * {
+  background: #69C;
+  border: 1px dashed white;
+}
