@@ -1,5 +1,6 @@
 body {
   background-color: #CCC;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .selections {
@@ -43,3 +44,7 @@ body {
   opacity: 1;
   font-size: 1.5rem;
 }
+
+/* .result-level {
+
+} */
