@@ -78,6 +78,8 @@ selectionButtons.forEach(selectionButton => {
 })
 
 function makeSelection(selection) {
+  const check = yourLevelSpan.innerText === computerLevelSpan.innerText
+  if (check) {
   const computerSelection = randomSelection()
   const yourWinner = isWinner(selection, computerSelection)
   const computerWinner = isWinner(computerSelection, selection)
@@ -94,6 +96,9 @@ function makeSelection(selection) {
     incrementScore(computerScoreSpan)
     advance(computerLevelSpan)
     loseLevel(yourLevelSpan)
+  }
+  } else {
+    alert(`You must find another ${yourLevelSpan.innerText}.`) // TODO: Find and Prestige buttons
   }
 }
 
