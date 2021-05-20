@@ -98,7 +98,7 @@ function makeSelection(selection) {
     loseLevel(yourLevelSpan)
   }
   } else {
-    alert(`You must find another ${yourLevelSpan.innerText}.`) // TODO: Find and Prestige buttons
+    alert(`You must find another ${yourLevelSpan.innerText}.`) // TODO: Find and Prestige buttons (Cannot try others without having a winner/loser for the one already chosen)
   }
 }
 
