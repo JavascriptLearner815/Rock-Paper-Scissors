@@ -1,4 +1,8 @@
+// TODO: for...of cleanup: To Array.find()
+{
 const selectionButtons = document.querySelectorAll('[data-selection]')
+const findButton = document.getElementById('find')
+const prestigeButton = document.getElementById('prestige')
 const finalColumn = document.querySelector('[data-final-column]')
 const computerScoreSpan = document.querySelector('[data-computer-score]')
 const computerLevelSpan = document.querySelector('[data-computer-level]')
@@ -80,6 +84,22 @@ selectionButtons.forEach(selectionButton => {
 function makeSelection(selection) {
   const check = yourLevelSpan.innerText === computerLevelSpan.innerText
   if (check) {
+    const levelRequired = SELECTIONS.find(thing => thing.name === selection).levelRequired
+    if (levelRequired) {
+      if (atLeastLevel(levelRequired, yourLevelSpan)) {
+        makeSelectionNow(selection)
+      } else {
+        alert(`You must be at least ${SELECTIONS.find(thing => thing.name === levelRequired).emoji} ${capitalizeFirstLetter(levelRequired)} to do that move!`)
+      }
+    } else {
+      makeSelectionNow(selection)
+    }
+  } else {
+    alert(`You must find another ${yourLevelSpan.innerText}.`) // TODO: Find and Prestige buttons (Cannot try others without having a winner/loser for the one already chosen)
+  }
+}
+    
+function makeSelectionNow(selection) {
   const computerSelection = randomSelection()
   const yourWinner = isWinner(selection, computerSelection)
   const computerWinner = isWinner(computerSelection, selection)
@@ -96,9 +116,6 @@ function makeSelection(selection) {
     incrementScore(computerScoreSpan)
     advance(computerLevelSpan)
     loseLevel(yourLevelSpan)
-  }
-  } else {
-    alert(`You must find another ${yourLevelSpan.innerText}.`) // TODO: Find and Prestige buttons (Cannot try others without having a winner/loser for the one already chosen)
   }
 }
 
@@ -148,10 +165,32 @@ function isWinner(selection, opponentSelection) {
 }
 
 function randomSelection() {
-  const randomIndex = Math.floor(Math.random() * SELECTIONS.length)
+  const purportedLength = SELECTIONS.length
+  let realLength = purportedLength
+  for (const selection of SELECTIONS) {
+    if (selection.levelRequired) {
+      if (!atLeastLevel(selection.levelRequired, computerLevelSpan)) {
+        --realLength
+      }
+    }
+  }
+  const randomIndex = Math.floor(Math.random() * realLength)
   return SELECTIONS[randomIndex]
 }
 
 function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1)
+}
+    
+function atLeastLevel(name, span) {
+  const wantedLevel = LEVELS.find(level => level.name === name)
+  const wantedLevelIndex = LEVELS.indexOf(wantedLevel)
+  const actualLevel = LEVELS.find(level => span.innerText.toLowerCase().includes(level.name))
+  const actualLevelIndex = LEVELS.indexOf(actualLevel)
+  if (actualLevelIndex >= wantedLevelIndex) {
+    return true
+  } else {
+    return false
+  }
+}
 }
