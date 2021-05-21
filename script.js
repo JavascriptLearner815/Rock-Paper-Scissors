@@ -84,8 +84,7 @@ selectionButtons.forEach(selectionButton => {
 function makeSelection(selection) {
   const check = yourLevelSpan.innerText === computerLevelSpan.innerText
   if (check) {
-    let levelRequired = SELECTIONS.find(thing => thing.name === selection)
-    levelRequired = levelRequired.levelRequired
+    const levelRequired = SELECTIONS.find(thing => thing.name === selection).levelRequired // FIXME: Line 87
     if (levelRequired) {
       if (atLeastLevel(levelRequired, yourLevelSpan)) {
         makeSelectionNow(selection)
